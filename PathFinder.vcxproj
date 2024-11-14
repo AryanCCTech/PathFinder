@@ -64,7 +64,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)header;$(SolutionDir)Geometry\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(OutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -79,7 +79,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -96,17 +96,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="shaders\fragment.glsl" />
+    <None Include="shaders\vertex.glsl" />
     <QtRcc Include="PathFinder.qrc" />
-    <QtUic Include="PathFinder.ui" />
     <None Include="PathFinder.ico" />
     <ResourceCompile Include="PathFinder.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Graph.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\PathFinder.cpp" />
+    <ClCompile Include="src\OpenglWidget.cpp" />
+    <ClCompile Include="src\PathFormulater.cpp" />
+    <ClCompile Include="src\RiverPathFinder.cpp" />
+    <ClCompile Include="src\STLFileReader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="header\PathFinder.h" />
+    <ClInclude Include="header\Graph.h" />
+    <ClInclude Include="header\PathFormulater.h" />
+    <QtMoc Include="header\OpenglWidget.h" />
+    <QtMoc Include="header\RiverPathFinder.h" />
+    <ClInclude Include="header\STLFileReader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

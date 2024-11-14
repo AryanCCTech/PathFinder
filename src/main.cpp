@@ -1,10 +1,10 @@
-#include "PathFinder.h"
+#include "RiverPathFinder.h"
 #include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    PathFinder w;
+    RiverPathFinder w;
     w.show();
     return a.exec();
 }

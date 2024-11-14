@@ -26,9 +26,6 @@
     <QtRcc Include="PathFinder.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
-    <QtUic Include="PathFinder.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <None Include="PathFinder.ico">
       <Filter>Resource Files</Filter>
     </None>
@@ -40,13 +37,43 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PathFinder.cpp">
+    <ClCompile Include="src\Graph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\STLFileReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenglWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RiverPathFinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PathFormulater.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="header\PathFinder.h">
+    <ClInclude Include="header\Graph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header\STLFileReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header\PathFormulater.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="header\RiverPathFinder.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="header\OpenglWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\fragment.glsl" />
+    <None Include="shaders\vertex.glsl" />
   </ItemGroup>
 </Project>
