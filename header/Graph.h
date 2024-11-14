@@ -17,9 +17,8 @@ class Graph {
         const std::unordered_map<int, Geometry::Point> getVertices() const;
         const std::unordered_map<int, std::set<int>> getEdges() const;
         const std::set<int> getNeighbors(int id) const;     
-        const Geometry::Point getVertex(int id) const;      
-
-    private:
+        const Geometry::Point getVertex(int id) const;     
+        const Geometry::Point getHighestPoint();
         std::unordered_map<int, Geometry::Point> points;    
         std::unordered_map<int, std::set<int>> adjList;     
     };
