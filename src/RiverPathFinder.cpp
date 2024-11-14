@@ -61,6 +61,7 @@ void RiverPathFinder::onFindPathClick()
     STLFileReader reader;
     reader.read(inputFileName.toStdString(), graph);
     OpenGlWidget::Data data = convertDataToGraphicsObject(reader);
+
     openglWidgetInput->setData(data);
 }
 
@@ -74,6 +75,9 @@ OpenGlWidget::Data RiverPathFinder::convertDataToGraphicsObject(STLFileReader& r
             data.vertices.push_back(point.mX);
             data.vertices.push_back(point.mY);
             data.vertices.push_back(point.mZ);
+
+            bool isRiverPoint = true;
+            data.highlightFlags.push_back(isRiverPoint ? 1.0f : 0.0f);
         }
         Point normal = triangle.Normal();
 

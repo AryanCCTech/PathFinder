@@ -2,7 +2,7 @@
 #include <QFile>
 #include <QDataStream>
 #include <QDebug>
-
+using namespace Geometry;
 OpenGlWidget::OpenGlWidget(QWidget* parent)
     : QOpenGLWidget(parent),
     vbo(QOpenGLBuffer::VertexBuffer),
@@ -70,6 +70,8 @@ void OpenGlWidget::initializeGL()
             vertexData.push_back(data.normals[i]);
             vertexData.push_back(data.normals[i + 1]);
             vertexData.push_back(data.normals[i + 2]);
+
+            vertexData.push_back(data.highlightFlags[i / 3]);
         }
 
         vbo.create();
@@ -79,8 +81,11 @@ void OpenGlWidget::initializeGL()
         shaderProgram.bind();
         shaderProgram.enableAttributeArray(0); // Position attribute
         shaderProgram.enableAttributeArray(1); // Normal attribute
-        shaderProgram.setAttributeBuffer(0, GL_FLOAT, 0, 3, 6 * sizeof(float));
-        shaderProgram.setAttributeBuffer(1, GL_FLOAT, 3 * sizeof(float), 3, 6 * sizeof(float));
+        shaderProgram.enableAttributeArray(2); // Highlight flag attribute
+
+        shaderProgram.setAttributeBuffer(0, GL_FLOAT, 0, 3, 7 * sizeof(float)); // Position
+        shaderProgram.setAttributeBuffer(1, GL_FLOAT, 3 * sizeof(float), 3, 7 * sizeof(float)); // Normal
+        shaderProgram.setAttributeBuffer(2, GL_FLOAT, 6 * sizeof(float), 1, 7 * sizeof(float)); // Highlight
         shaderProgram.release();
         isInitialized = true;
     }
@@ -106,13 +111,14 @@ void OpenGlWidget::paintGL()
         shaderProgram.bind();
         shaderProgram.setUniformValue("projection", projection);
         shaderProgram.setUniformValue("modelView", modelView);
+        shaderProgram.setUniformValue("riverPathColor", QVector3D(0.0f, 0.0f, 1.0f)); // Set to blue
 
         QVector3D lightPos(0.5f, 0.5f, 1.0f);
         shaderProgram.setUniformValue("lightPos", lightPos);
         shaderProgram.setUniformValue("viewPos", QVector3D(0.0f, 0.0f, 5.0f));
 
         vbo.bind();
-        glDrawArrays(GL_TRIANGLES, 0, data.vertices.size());
+        glDrawArrays(GL_LINES, 0, data.vertices.size());
         vbo.release();
 
         shaderProgram.release();
@@ -167,3 +173,4 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent* event)
 
     viewChange(zoomLevel, rotation, panOffset);
 }
+

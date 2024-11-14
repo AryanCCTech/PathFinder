@@ -8,7 +8,7 @@
 #include <QVector3D>
 #include <QMouseEvent>
 #include <vector>
-
+#include "STLFileReader.h"
 
 class OpenGlWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -19,6 +19,7 @@ public:
     {
         QVector<GLfloat> vertices;
         QVector<GLfloat> normals;
+        QVector<GLfloat> highlightFlags; // New attribute for highlight status
     };
 
 public:
@@ -40,12 +41,11 @@ protected:
 
     void wheelEvent(QWheelEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
-    void mouseMoveEvent(QMouseEvent* event) override;
-
+    void mouseMoveEvent(QMouseEvent* event) override; 
 private:
     //void loadSTL(const QString& filePath);
     void updateModelViewMatrix();
-
+     
     QOpenGLShaderProgram shaderProgram;
     QOpenGLBuffer vbo;
     QMatrix4x4 projection;
