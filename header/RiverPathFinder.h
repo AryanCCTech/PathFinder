@@ -29,6 +29,7 @@ private:
     OpenGlWidget::Data convertDataToGraphicsObject(STLFileReader& reader);
 
 private:
+    STLFileReader reader;
     Graph graph;
 
     QPushButton* loadFile;

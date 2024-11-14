@@ -1,6 +1,7 @@
 #include "RiverPathFinder.h"
 #include "STLFileReader.h"
 #include "Graph.h"
+#include "PathFormulater.h"
 
 #include <QFileDialog>
 #include <QGridLayout>
@@ -49,7 +50,6 @@ void  RiverPathFinder::onLoadFileClick()
     if (!fileName.isEmpty())
     {
         inputFilePath = fileName;
-        STLFileReader reader;
         reader.read(inputFilePath.toStdString(),graph);
         OpenGlWidget::Data data = convertDataToGraphicsObject(reader);
         openglWidgetInput->setData(data);
@@ -58,10 +58,16 @@ void  RiverPathFinder::onLoadFileClick()
 
 void RiverPathFinder::onFindPathClick()
 {
-    STLFileReader reader;
-    reader.read(inputFileName.toStdString(), graph);
-    OpenGlWidget::Data data = convertDataToGraphicsObject(reader);
-    openglWidgetInput->setData(data);
+    qDebug() << "Find Path Clicked ";
+    Geometry::Point start = graph.getHighestPoint();
+    PathFormulater pathformulater(graph,start);
+    pathformulater.findPath();
+    for (auto i : pathformulater.path)
+    {
+        qDebug() << i;
+    }
+    /*OpenGlWidget::Data data = convertDataToGraphicsObject(reader);
+    openglWidgetInput->setData(data);*/
 }
 
 OpenGlWidget::Data RiverPathFinder::convertDataToGraphicsObject(STLFileReader& reader)

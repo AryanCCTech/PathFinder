@@ -9,10 +9,9 @@ public:
     PathFormulater(Graph& graph,Geometry::Point& startPoint);
     ~PathFormulater();
     std::vector<int> findPath();
-private:
+    std::vector<int> path;               
     Graph& graph;                  
     Geometry::Point startPoint;          
-    std::vector<int> path;               
     std::unordered_set<int> visited;     
 
     int getNextNodeWithLeastY(int currentNodeId);

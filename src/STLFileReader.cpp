@@ -43,7 +43,7 @@ bool STLFileReader::read(const std::string& filename, Graph& graph) {
             if (normalPointMap.find(normalKey) == normalPointMap.end()) {
                 Point normalPoint(x, y, z, normalId);
                 normals.push_back(normalPoint);
-                graph.addVertex(normalId, normalPoint);
+                //graph.addVertex(normalId, normalPoint);
                 normalPointMap[normalKey] = normalId++;
                 qDebug() << "Created Normal " << normalPoint.mX << " " << normalPoint.mY << " " << normalPoint.mZ << " " << normalPoint.mID;
             }
