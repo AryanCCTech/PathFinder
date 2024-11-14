@@ -2,15 +2,25 @@
 
 using namespace Geometry;
 
-Geometry::Point::Point(double x, double y, double z)
+Geometry::Point::Point() : mX(0), mY(0), mZ(0), mID(-1)
+{
+}
+
+Geometry::Point::Point(double x, double y, double z, int id)
 {
 	mX = x;
 	mY = y;
 	mZ = z;
+	mID = id;
 }
 
 Geometry::Point::~Point()
 {
+}
+
+float Geometry::Point::getY()
+{
+	return mY;
 }
 
 std::vector<double> Geometry::Point::coord()
