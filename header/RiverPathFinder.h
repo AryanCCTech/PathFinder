@@ -8,6 +8,7 @@
 #include "Triangle.h"
 #include "OpenglWidget.h"
 #include "Graph.h"
+#include "STLFileReader.h"
 
 using namespace Geometry;
 
@@ -25,7 +26,7 @@ private slots:
 
 private:
     void setupUi();
-    OpenGlWidget::Data convertDataToGraphicsObject(const Graph& graph);
+    OpenGlWidget::Data convertDataToGraphicsObject(STLFileReader& reader);
 
 private:
     Graph graph;

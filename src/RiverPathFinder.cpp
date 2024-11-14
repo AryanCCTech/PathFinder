@@ -51,7 +51,7 @@ void  RiverPathFinder::onLoadFileClick()
         inputFilePath = fileName;
         STLFileReader reader;
         reader.read(inputFilePath.toStdString(),graph);
-        OpenGlWidget::Data data = convertDataToGraphicsObject(graph);
+        OpenGlWidget::Data data = convertDataToGraphicsObject(reader);
         openglWidgetInput->setData(data);
     }
 }
@@ -60,12 +60,29 @@ void RiverPathFinder::onFindPathClick()
 {
     STLFileReader reader;
     reader.read(inputFileName.toStdString(), graph);
-    OpenGlWidget::Data data = convertDataToGraphicsObject(graph);
+    OpenGlWidget::Data data = convertDataToGraphicsObject(reader);
     openglWidgetInput->setData(data);
 }
 
-OpenGlWidget::Data RiverPathFinder::convertDataToGraphicsObject(const Graph& graph)
+OpenGlWidget::Data RiverPathFinder::convertDataToGraphicsObject(STLFileReader& reader)
 {
     OpenGlWidget::Data data;
+    for (auto triangle : reader.triangles)
+    {
+        for (auto point : triangle.Points())
+        {
+            data.vertices.push_back(point.mX);
+            data.vertices.push_back(point.mY);
+            data.vertices.push_back(point.mZ);
+        }
+        Point normal = triangle.Normal();
+
+        for (size_t i = 0; i < 3; i++)
+        {
+            data.normals.push_back(normal.mX);
+            data.normals.push_back(normal.mY);
+            data.normals.push_back(normal.mZ);
+        }
+    }
     return data;
 }
