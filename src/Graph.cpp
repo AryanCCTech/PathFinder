@@ -39,13 +39,11 @@ const Geometry::Point Graph::getHighestPoint()
         throw std::runtime_error("Graph has no vertices.");
     }
 
-    // Initialize the highest point with the first vertex in the graph
     auto highestPoint = points.begin()->second;
 
-    // Iterate through the vertices to find the one with the highest coordinates
     for (const auto& pair : points) {
         const Geometry::Point& point = pair.second;
-        if (point.mX > highestPoint.mX && point.mY > highestPoint.mY && point.mZ > highestPoint.mZ) {
+        if (point.mZ > highestPoint.mZ) {
             highestPoint = point;
         }
     }

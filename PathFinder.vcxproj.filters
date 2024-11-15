@@ -52,6 +52,12 @@
     <ClCompile Include="src\PathFormulater.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\GraphicsSynchronizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenGLWidgetLines.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\Graph.h">
@@ -69,6 +75,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="header\OpenglWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="header\GraphicsSynchronizer.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="header\OpenGLWidgetLines.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

@@ -7,7 +7,9 @@
 
 #include "Triangle.h"
 #include "OpenglWidget.h"
+#include "OpenGLWidgetLines.h"
 #include "Graph.h"
+#include "GraphicsSynchronizer.h"
 #include "STLFileReader.h"
 
 using namespace Geometry;
@@ -27,6 +29,7 @@ private slots:
 private:
     void setupUi();
     OpenGlWidget::Data convertDataToGraphicsObject(STLFileReader& reader);
+    OpenGlWidgetLines::Data convertDataToGraphicsObject1(STLFileReader& reader);
 
 private:
     STLFileReader reader;
@@ -36,8 +39,9 @@ private:
     QPushButton* findPath;
 
     OpenGlWidget* openglWidgetInput;
-    OpenGlWidget* openglWidgetOutput;
+    OpenGlWidgetLines* openglWidgetOutput;
 
+    GraphicsSynchronizer* graphicsSynchronizer;
 
     QVector<GLfloat> vertices;
 

@@ -1,23 +1,23 @@
-#include "OpenGlWidget.h"
+#include "OpenGLWidgetLines.h"
 #include <QFile>
 #include <QDataStream>
 #include <QDebug>
 
-OpenGlWidget::OpenGlWidget(QWidget* parent)
+OpenGlWidgetLines::OpenGlWidgetLines(QWidget* parent)
     : QOpenGLWidget(parent),
     vbo(QOpenGLBuffer::VertexBuffer),
     isInitialized(false)
 {
 }
 
-OpenGlWidget::~OpenGlWidget()
+OpenGlWidgetLines::~OpenGlWidgetLines()
 {
     makeCurrent();
     vbo.destroy();
     doneCurrent();
 }
 
-void OpenGlWidget::setData(Data inData)
+void OpenGlWidgetLines::setData(Data inData)
 {
     data = inData;
     makeCurrent();
@@ -25,17 +25,17 @@ void OpenGlWidget::setData(Data inData)
     update();
 }
 
-QSize OpenGlWidget::minimumSizeHint() const
+QSize OpenGlWidgetLines::minimumSizeHint() const
 {
     return QSize(50, 50);
 }
 
-QSize OpenGlWidget::sizeHint() const
+QSize OpenGlWidgetLines::sizeHint() const
 {
     return QSize(800, 800);
 }
 
-void OpenGlWidget::sync(float inZoomLevel, QVector3D inRotation, QVector2D inPanOffset)
+void OpenGlWidgetLines::sync(float inZoomLevel, QVector3D inRotation, QVector2D inPanOffset)
 {
     zoomLevel = inZoomLevel;
     rotation = inRotation;
@@ -43,7 +43,7 @@ void OpenGlWidget::sync(float inZoomLevel, QVector3D inRotation, QVector2D inPan
     update();
 }
 
-void OpenGlWidget::initializeGL()
+void OpenGlWidgetLines::initializeGL()
 {
     if (data.vertices.size() > 0 && data.normals.size() > 0)
     {
@@ -88,7 +88,7 @@ void OpenGlWidget::initializeGL()
     }
 }
 
-void OpenGlWidget::resizeGL(int w, int h)
+void OpenGlWidgetLines::resizeGL(int w, int h)
 {
     if (isInitialized == true)
     {
@@ -98,7 +98,7 @@ void OpenGlWidget::resizeGL(int w, int h)
     projection.perspective(45.0f, float(w) / float(h), 0.1f, 100.0f);
 }
 
-void OpenGlWidget::paintGL()
+void OpenGlWidgetLines::paintGL()
 {
     if (isInitialized == true)
     {
@@ -114,7 +114,7 @@ void OpenGlWidget::paintGL()
         shaderProgram.setUniformValue("viewPos", QVector3D(0.0f, 0.0f, 5.0f));
 
         vbo.bind();
-        glDrawArrays(GL_TRIANGLES, 0, data.vertices.size());
+        glDrawArrays(GL_LINES, 0, data.vertices.size());
         vbo.release();
 
         shaderProgram.release();
@@ -122,7 +122,7 @@ void OpenGlWidget::paintGL()
 }
 
 
-void OpenGlWidget::updateModelViewMatrix()
+void OpenGlWidgetLines::updateModelViewMatrix()
 {
     modelView.setToIdentity();
     modelView.translate(panOffset.x(), panOffset.y(), -5.0f);
@@ -132,7 +132,7 @@ void OpenGlWidget::updateModelViewMatrix()
     modelView.rotate(rotation.z(), 0.0f, 0.0f, 1.0f);
 }
 
-void OpenGlWidget::wheelEvent(QWheelEvent* event)
+void OpenGlWidgetLines::wheelEvent(QWheelEvent* event)
 {
     // Zoom in or out
     if (event->angleDelta().y() > 0)
@@ -145,12 +145,12 @@ void OpenGlWidget::wheelEvent(QWheelEvent* event)
 
 }
 
-void OpenGlWidget::mousePressEvent(QMouseEvent* event)
+void OpenGlWidgetLines::mousePressEvent(QMouseEvent* event)
 {
     lastMousePosition = event->pos();
 }
 
-void OpenGlWidget::mouseMoveEvent(QMouseEvent* event)
+void OpenGlWidgetLines::mouseMoveEvent(QMouseEvent* event)
 {
     QPoint delta = event->pos() - lastMousePosition;
     lastMousePosition = event->pos();

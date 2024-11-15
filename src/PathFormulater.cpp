@@ -20,7 +20,6 @@ std::vector<int> PathFormulater::findPath() {
         int nextNodeId = getNextNodeWithLeastY(currentNodeId);
 
         if (nextNodeId == -1) {
-            // No unvisited neighbors left; end the path here
             break;
         }
 
@@ -32,27 +31,39 @@ std::vector<int> PathFormulater::findPath() {
     return path;
 }
 
-int PathFormulater::getNextNodeWithLeastY(int currentNodeId) 
+int PathFormulater::getNextNodeWithLeastY(int currentNodeId)
 {
     double minY = std::numeric_limits<double>::max();
     int nextNodeId = -1;
 
     try {
         auto neighbors = graph.getNeighbors(currentNodeId);
+        bool hasUnvisitedNeighbors = false;
+        for (const auto& neighborId : neighbors) {
+            if (!visited.count(neighborId)) {
+                hasUnvisitedNeighbors = true;
+                break;
+            }
+        }
+
+        if (!hasUnvisitedNeighbors) {
+            return -1;
+        }
+
         for (const auto& neighborId : neighbors) {
             if (visited.count(neighborId)) continue;
 
             const Geometry::Point& neighbor = graph.getVertex(neighborId);
-            if (neighbor.mY < minY) {
-                minY = neighbor.mY;
+            if (neighbor.mZ < minY) {
+                minY = neighbor.mZ;
                 nextNodeId = neighborId;
             }
         }
     }
     catch (const std::out_of_range& e) {
         qDebug() << "Error: Node" << currentNodeId << "has no neighbors.";
-        return -1;  // Explicitly return -1 if neighbors cannot be retrieved
+        return -1;
     }
-
+    qDebug() << "Current Node:" << currentNodeId << ", X Value:" << graph.getVertex(currentNodeId).mX << ", Y Value:" << graph.getVertex(currentNodeId).mY << ", Z Value:" << graph.getVertex(currentNodeId).mZ;
     return nextNodeId;
 }

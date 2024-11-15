@@ -10,7 +10,7 @@
 #include <vector>
 
 
-class OpenGlWidget : public QOpenGLWidget, protected QOpenGLFunctions
+class OpenGlWidgetLines : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
 
@@ -22,8 +22,8 @@ public:
     };
 
 public:
-    explicit OpenGlWidget(QWidget* parent = nullptr);
-    ~OpenGlWidget() override;
+    explicit OpenGlWidgetLines(QWidget* parent = nullptr);
+    ~OpenGlWidgetLines() override;
 
     void setData(Data inData);
     QSize minimumSizeHint() const override;
