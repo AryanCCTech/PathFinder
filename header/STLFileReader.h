@@ -14,9 +14,9 @@ private:
     std::unordered_map<std::string, int> normalPointMap;
     int pointId = 1;
     int normalId = 1000000;
-    std::vector<Geometry::Point> points;
     std::vector<Geometry::Point> normals;
 public:
+    std::vector<Geometry::Point> points;
     std::vector<Geometry::Triangle> triangles;
     STLFileReader();
     ~STLFileReader();

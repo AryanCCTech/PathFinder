@@ -95,10 +95,7 @@ bool STLFileReader::read(const std::string& filename, Graph& graph) {
 }
 
 void STLFileReader::addEdgesForTriangle( Geometry::Point& p1, Geometry::Point& p2, Graph& graph) {
-    if (p1.getY() > p2.getY()) {
+    if (p1.mY > p2.mY) {
         graph.addEdge(p1.mID, p2.mID);  // Edge from higher Y to lower Y
-    }
-    else {
-        graph.addEdge(p2.mID, p1.mID);  // Edge from higher Y to lower Y
     }
 }
