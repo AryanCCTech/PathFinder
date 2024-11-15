@@ -15,7 +15,7 @@ STLFileReader::STLFileReader()
 STLFileReader::~STLFileReader()
 {
 }
-
+ 
 bool STLFileReader::operator()(double a, double b) const
 {
     return fabs(a - b) > TOLERANCE ? a < b : false;
@@ -92,6 +92,16 @@ bool STLFileReader::read(const std::string& filename, Graph& graph) {
         qDebug() << i.P3().mX << " " << i.P3().mY << " " << i.P3().mZ;
     }
     return true;
+}
+
+std::vector<Geometry::Point>& STLFileReader::getPoints()
+{
+    return points;
+}
+
+std::vector<Geometry::Triangle>& STLFileReader::getTriangles()
+{
+    return triangles;
 }
 
 void STLFileReader::addEdgesForTriangle( Geometry::Point& p1, Geometry::Point& p2, Graph& graph) {

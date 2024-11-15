@@ -63,25 +63,27 @@ void RiverPathFinder::onFindPathClick()
     Geometry::Point start = graph.getHighestPoint();
     PathFormulater pathformulater(graph,start);
     pathformulater.findPath();
+    std::vector<Geometry::Point>points = reader.getPoints();
     for (int j= 0; j < pathformulater.path.size();j++)
     {
         pathformulater.path[j] -= 1;
         int i = pathformulater.path[j];
-        qDebug()<<  i << "Point ID " << reader.points[i].mID << "X value " << reader.points[i].mX << "Y value " << reader.points[i].mY << "Z value " << reader.points[i].mZ;
+
+        qDebug()<<  i << "Point ID " <<  points[i].mID << "X value " <<  points[i].mX << "Y value " <<  points[i].mY << "Z value " <<  points[i].mZ;
     }
     OpenGlWidgetLines::Data data1 = convertDataToGraphicsObject1(reader);
     data1.vertices.clear();
-    data1.vertices.push_back(reader.points[pathformulater.path[0]].mX);
-    data1.vertices.push_back(reader.points[pathformulater.path[0]].mY);
-    data1.vertices.push_back(reader.points[pathformulater.path[0]].mZ);
+    data1.vertices.push_back( points[pathformulater.path[0]].mX);
+    data1.vertices.push_back( points[pathformulater.path[0]].mY);
+    data1.vertices.push_back( points[pathformulater.path[0]].mZ);
     for (int i = 1; i < pathformulater.path.size(); i++)
     {
-        data1.vertices.push_back(reader.points[pathformulater.path[i]].mX);
-        data1.vertices.push_back(reader.points[pathformulater.path[i]].mY);
-        data1.vertices.push_back(reader.points[pathformulater.path[i]].mZ);
-        data1.vertices.push_back(reader.points[pathformulater.path[i]].mX);
-        data1.vertices.push_back(reader.points[pathformulater.path[i]].mY);
-        data1.vertices.push_back(reader.points[pathformulater.path[i]].mZ);
+        data1.vertices.push_back( points[pathformulater.path[i]].mX);
+        data1.vertices.push_back( points[pathformulater.path[i]].mY);
+        data1.vertices.push_back(  points[pathformulater.path[i]].mZ);
+        data1.vertices.push_back( points[pathformulater.path[i]].mX);
+        data1.vertices.push_back( points[pathformulater.path[i]].mY);
+        data1.vertices.push_back( points[pathformulater.path[i]].mZ);
     }
     data1.vertices.pop_back();
     data1.vertices.pop_back();
@@ -91,8 +93,10 @@ void RiverPathFinder::onFindPathClick()
 
 OpenGlWidget::Data RiverPathFinder::convertDataToGraphicsObject(STLFileReader& reader)
 {
+    std::vector<Geometry::Triangle>triangles = reader.getTriangles();
+
     OpenGlWidget::Data data;
-    for (auto triangle : reader.triangles)
+    for (auto triangle :  triangles)
     {
         for (auto point : triangle.Points())
         {
@@ -118,7 +122,9 @@ OpenGlWidget::Data RiverPathFinder::convertDataToGraphicsObject(STLFileReader& r
 OpenGlWidgetLines::Data RiverPathFinder::convertDataToGraphicsObject1(STLFileReader& reader)
 {
     OpenGlWidgetLines::Data data;
-    for (auto triangle : reader.triangles)
+    std::vector<Geometry::Triangle>triangles = reader.getTriangles();
+
+    for (auto triangle :  triangles)
     {
         for (auto point : triangle.Points())
         {
