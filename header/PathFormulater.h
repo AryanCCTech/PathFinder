@@ -4,15 +4,19 @@
 #include <unordered_set>
 #include "Graph.h"
 
-class PathFormulater {
+class PathFormulater 
+{
+    std::vector<int> path;         
+    std::unordered_set<int> visited;     
+    Graph& graph;
 public:
-    PathFormulater(Graph& graph,Geometry::Point& startPoint);
+    PathFormulater(Graph& graph,int startPointId);
     ~PathFormulater();
     std::vector<int> findPath();
-    std::vector<int> path;               
-    Graph& graph;                  
-    Geometry::Point startPoint;          
-    std::unordered_set<int> visited;     
+    int startPointId;
+    std::vector<int> getPath();
+    std::vector<int> findPathToPoint(int targetPointId);
+    void setDescendingZValues(std::vector<int>& path);
 
-    int getNextNodeWithLeastY(int currentNodeId);
+    int getNextNodeWithLeastZ(int currentNodeId);
 };

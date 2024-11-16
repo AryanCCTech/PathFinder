@@ -40,6 +40,7 @@ private:
 
     OpenGlWidget* openglWidgetInput;
     OpenGlWidgetLines* openglWidgetOutput;
+    OpenGlWidget* openglWidgetOutput1;
 
     GraphicsSynchronizer* graphicsSynchronizer;
 
@@ -47,8 +48,6 @@ private:
 
     QString tempFileName;
 
-
-    // translation data
     QString inputFilePath;
     QString inputFileName;
 };

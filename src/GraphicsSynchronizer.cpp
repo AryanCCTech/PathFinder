@@ -2,11 +2,12 @@
 #include "OpenglWidgetLines.h"
 #include "GraphicsSynchronizer.h"
 
-GraphicsSynchronizer::GraphicsSynchronizer(OpenGlWidget* left, OpenGlWidgetLines* right)
+
+GraphicsSynchronizer::GraphicsSynchronizer(OpenGlWidget* left, OpenGlWidget* right)
     : left(left), right(right)
 {
     connect(left, &OpenGlWidget::viewChange, this, &GraphicsSynchronizer::synchronize);
-    connect(right, &OpenGlWidgetLines::viewChange, this, &GraphicsSynchronizer::synchronize);
+    connect(right, &OpenGlWidget::viewChange, this, &GraphicsSynchronizer::synchronize);
 }
 
 GraphicsSynchronizer::~GraphicsSynchronizer()

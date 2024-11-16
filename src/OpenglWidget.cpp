@@ -52,17 +52,12 @@ void OpenGlWidget::initializeGL()
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-        // Load shader program
         bool shaderLoaded = false;
 
         shaderLoaded = shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, "./shaders/vertex.glsl");
         shaderLoaded = shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, "./shaders/fragment.glsl");
         shaderProgram.link();
 
-        // Load STL data
-        //loadSTL("path/to/your/model.stl");
-
-        // Prepare VBO
         std::vector<float> vertexData;
         for (int i = 0; i < data.vertices.size(); i = i + 3)
         {
@@ -79,8 +74,8 @@ void OpenGlWidget::initializeGL()
         vbo.allocate(vertexData.data(), static_cast<int>(vertexData.size() * sizeof(float)));
 
         shaderProgram.bind();
-        shaderProgram.enableAttributeArray(0); // Position attribute
-        shaderProgram.enableAttributeArray(1); // Normal attribute
+        shaderProgram.enableAttributeArray(0); 
+        shaderProgram.enableAttributeArray(1); 
         shaderProgram.setAttributeBuffer(0, GL_FLOAT, 0, 3, 6 * sizeof(float));
         shaderProgram.setAttributeBuffer(1, GL_FLOAT, 3 * sizeof(float), 3, 6 * sizeof(float));
         shaderProgram.release();
@@ -134,11 +129,10 @@ void OpenGlWidget::updateModelViewMatrix()
 
 void OpenGlWidget::wheelEvent(QWheelEvent* event)
 {
-    // Zoom in or out
     if (event->angleDelta().y() > 0)
-        zoomLevel *= 1.1f;  // Zoom in
+        zoomLevel *= 1.1f;
     else
-        zoomLevel /= 1.1f;  // Zoom out
+        zoomLevel /= 1.1f;  
     update();
 
     viewChange(zoomLevel, rotation, panOffset);
@@ -155,14 +149,13 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent* event)
     QPoint delta = event->pos() - lastMousePosition;
     lastMousePosition = event->pos();
 
-    if (event->buttons() & Qt::LeftButton) {
-        // Rotate model
+    if (event->buttons() & Qt::LeftButton) 
+    {
         rotation.setX(rotation.x() + delta.y() * 0.5f);
         rotation.setY(rotation.y() + delta.x() * 0.5f);
     }
     else if (event->buttons() & Qt::RightButton)
     {
-        // Pan model
         panOffset.setX(panOffset.x() + delta.x() * 0.01f);
         panOffset.setY(panOffset.y() - delta.y() * 0.01f);
     }
