@@ -17,17 +17,13 @@ private:
     
     std::vector<Geometry::Point> points;
     std::vector<Geometry::Point> normals;
+    std::vector<Geometry::Point> points;
     std::vector<Geometry::Triangle> triangles;
-
-    void addEdgesForTriangle( Geometry::Point& p1, Geometry::Point& p2,Graph& graph); 
-  
-    bool operator()(double a, double b) const;
 public:
     STLFileReader();
     ~STLFileReader();
     bool read(const std::string& filename, Graph& grpah);
-    std::vector<Geometry::Point>& getPoints();
-    std::vector<Geometry::Triangle>& getTriangles();
-
- 
+    void addEdgesForTriangle( Geometry::Point& p1, Geometry::Point& p2,Graph& graph);
+    std::vector<Geometry::Point>& getPoints() ;
+    std::vector<Geometry::Triangle>& getTriangles() ;
 };

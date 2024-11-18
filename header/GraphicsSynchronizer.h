@@ -4,14 +4,14 @@
 #include <QVector2D>
 
 class OpenGlWidget;
-class OpenGlWidgetLines;
+//class OpenGlWidgetLines;
 
 class GraphicsSynchronizer : public QObject
 {
     Q_OBJECT
 
 public:
-    GraphicsSynchronizer(OpenGlWidget* left, OpenGlWidgetLines* right);
+    GraphicsSynchronizer(OpenGlWidget* left, OpenGlWidget* right);
     ~GraphicsSynchronizer();
 
 private slots:
@@ -19,5 +19,6 @@ private slots:
 
 private:
     OpenGlWidget* left;
-    OpenGlWidgetLines* right;
+    OpenGlWidget* right;
+    //OpenGlWidgetLines* right;
 };

@@ -42,7 +42,6 @@ protected:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override; 
 private:
-    //void loadSTL(const QString& filePath);
     void updateModelViewMatrix();
      
     QOpenGLShaderProgram shaderProgram;

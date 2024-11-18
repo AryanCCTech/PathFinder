@@ -18,10 +18,26 @@ Geometry::Point::~Point()
 {
 }
 
-float Geometry::Point::getY()
+double Geometry::Point::getX() 
+{
+	return mX;
+}
+
+double Geometry::Point::getY() 
 {
 	return mY;
 }
+
+double Geometry::Point::getZ()  
+{
+	return mZ;
+}
+
+void Geometry::Point::setZ(double zVal)
+{
+	mZ = zVal;
+}
+
 
 std::vector<double> Geometry::Point::coord()
 {
