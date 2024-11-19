@@ -5,7 +5,6 @@
 #include <string>
 #include "Triangle.h"
 #include "Graph.h"
-#define TOLERANCE 0.0000001
 
 class STLFileReader
 {

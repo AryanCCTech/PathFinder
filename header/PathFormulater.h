@@ -10,14 +10,14 @@ class PathFormulater
     std::vector<int> path;         
     std::unordered_set<int> visited;     
     Graph& graph;
+    int startPointId;
 public:
     PathFormulater(Graph& graph,int startPointId);
     ~PathFormulater();
     std::vector<int> findPath();
-    int startPointId;
     std::vector<int> getPath();
     std::vector<int> findPathToPoint(int targetPointId,STLFileReader& reader);
-    void setDescendingZValues(std::vector<int>& path,STLFileReader& reader);
+    void setDescendingZValues(std::vector<int> path,STLFileReader& reader);
     void updateTriangles(int id,STLFileReader& reader,double newZ);
     int getNextNodeWithLeastZ(int currentNodeId);
 };

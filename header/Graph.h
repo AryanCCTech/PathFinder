@@ -19,7 +19,7 @@ public:
 
     std::unordered_map<int, Geometry::Point> getVertices() ;
     std::unordered_map<int, std::set<int>> getEdges() ;
-    std::set<int> getNeighbors(int id) ;     
+    std::set<int> getNeighbors(int id) ;
     Geometry::Point getVertex(int id) ;
     int getHighestPoint();
 };
