@@ -1,7 +1,5 @@
 #include "Point.h"
 
-using namespace Geometry;
-
 Geometry::Point::Point() : mX(0), mY(0), mZ(0), mID(-1)
 {
 }
@@ -18,19 +16,14 @@ Geometry::Point::~Point()
 {
 }
 
-double Geometry::Point::getX() 
-{
-	return mX;
-}
-
-double Geometry::Point::getY() 
-{
-	return mY;
-}
-
 double Geometry::Point::getZ()  
 {
 	return mZ;
+}
+
+double Geometry::Point::getId() 
+{
+	return mID;
 }
 
 void Geometry::Point::setZ(double zVal)
@@ -38,10 +31,9 @@ void Geometry::Point::setZ(double zVal)
 	mZ = zVal;
 }
 
-
-std::vector<double> Geometry::Point::coord()
+std::vector<double> Geometry::Point::getCoords()
 {
-	std::vector<double> coords(3);
+	std::vector<double> coords;
 	coords.push_back(mX);
 	coords.push_back(mY);
 	coords.push_back(mZ);

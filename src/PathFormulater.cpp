@@ -1,3 +1,4 @@
+#pragma once
 #include "PathFormulater.h"
 #include "Graph.h"
 #include "Point.h"
@@ -6,6 +7,7 @@
 #include <QDebug>
 #include <stack>
 #include <queue>
+#include "STLFileReader.h"
 
 PathFormulater::PathFormulater(Graph& graph, int startPointId)
     : graph(graph), startPointId(startPointId) 
@@ -71,7 +73,7 @@ int PathFormulater::getNextNodeWithLeastZ(int currentNodeId)
         {
             if (visited.count(neighborId)) continue;
 
-            Geometry::Point& neighbor = graph.getVertex(neighborId);
+            Geometry::Point neighbor = graph.getVertex(neighborId);
             if (neighbor.getZ() < minZ) {
                 minZ = neighbor.getZ();
                 nextNodeId = neighborId;
@@ -83,20 +85,18 @@ int PathFormulater::getNextNodeWithLeastZ(int currentNodeId)
         qDebug() << "Error: Node" << currentNodeId << "has no neighbors.";
         return -1;
     }
-    qDebug() << "Current Node:" << currentNodeId << ", X Value:" << graph.getVertex(currentNodeId).getX() << ", Y Value:" << graph.getVertex(currentNodeId).getY() << ", Z Value:" << graph.getVertex(currentNodeId).getZ();
+    qDebug() << "Current Node:" << currentNodeId << ", Z Value : " << graph.getVertex(currentNodeId).getZ() << ", ID Value : " << graph.getVertex(currentNodeId).getId();
     return nextNodeId;
 }
 
-std::vector<int> PathFormulater::findPathToPoint(int targetPointId)
+std::vector<int> PathFormulater::findPathToPoint(int targetPointId,STLFileReader& inputReader)
 {
     if (visited.count(startPointId) == 0)
     {
         visited.insert(startPointId);
     }
-
-    // Map to store parent nodes for reconstructing the path
     std::unordered_map<int, int> parentMap;
-    std::queue<int> nodeQueue; // BFS queue
+    std::queue<int> nodeQueue;
     nodeQueue.push(startPointId);
     parentMap[startPointId] = -1;
 
@@ -107,16 +107,13 @@ std::vector<int> PathFormulater::findPathToPoint(int targetPointId)
 
         if (currentNodeId == targetPointId)
         {
-            // Path found, reconstruct it
             std::vector<int> path;
             for (int id = targetPointId; id != -1; id = parentMap[id])
             {
                 path.push_back(id);
             }
             std::reverse(path.begin(), path.end());
-
-            // Modify Z values to be in descending order
-            setDescendingZValues(path);
+            setDescendingZValues(path,inputReader);
             return path;
         }
 
@@ -125,7 +122,7 @@ std::vector<int> PathFormulater::findPathToPoint(int targetPointId)
             auto neighbors = graph.getNeighbors(currentNodeId);
             for (const auto& neighborId : neighbors)
             {
-                if (parentMap.find(neighborId) == parentMap.end()) // If not already visited
+                if (parentMap.find(neighborId) == parentMap.end())
                 {
                     parentMap[neighborId] = currentNodeId;
                     nodeQueue.push(neighborId);
@@ -138,10 +135,10 @@ std::vector<int> PathFormulater::findPathToPoint(int targetPointId)
         }
     }
 
-    return {}; // Return an empty path if the target is unreachable
+    return {};
 }
 
-void PathFormulater::setDescendingZValues(std::vector<int>& path)
+void PathFormulater::setDescendingZValues(std::vector<int>& path,STLFileReader& inputReader)
 {
     if (path.empty())
     {
@@ -159,10 +156,46 @@ void PathFormulater::setDescendingZValues(std::vector<int>& path)
     for (size_t i = 0; i < path.size(); ++i)
     {
         double newZ = startZ - (step * i);
+        updateTriangles(path[i], inputReader,newZ);
+ 
+    }
+}
 
-        graph.getVertex(path[i]).setZ(newZ);
+void PathFormulater::updateTriangles(int id, STLFileReader& inputReader, double newZ)
+{
+    std::vector<Geometry::Triangle>& triangles = inputReader.getTriangles();
 
-        qDebug() << "Setting Z value for Point ID:" << path[i]
-            << "to" << graph.getVertex(path[i]).getZ();;
+    for (Geometry::Triangle& triangle : triangles)
+    {
+        int p1Id = triangle.P1().getId();
+        int p2Id = triangle.P2().getId();
+        int p3Id = triangle.P3().getId();
+
+        if (p1Id == id)
+        {
+            std::vector<double> coords = triangle.P1().getCoords();
+            coords[2] = newZ;
+            Geometry::Point p(coords[0], coords[1], coords[2], triangle.P1().getId());
+            triangle.setP1(p); // Set the updated point
+            qDebug() << "Updated P1 Z to " << newZ;
+        }
+
+        if (p2Id == id)
+        {
+            std::vector<double> coords = triangle.P2().getCoords();
+            coords[2] = newZ; // Update Z coordinate
+            Geometry::Point p(coords[0], coords[1], coords[2], triangle.P2().getId());
+            triangle.setP2(p); // Set the updated point
+            qDebug() << "Updated P2 Z to " << newZ;
+        }
+
+        if (p3Id == id)
+        {
+            std::vector<double> coords = triangle.P3().getCoords();
+            coords[2] = newZ; // Update Z coordinate
+            Geometry::Point p(coords[0], coords[1], coords[2], triangle.P3().getId());
+            triangle.setP3(p); // Set the updated point
+            qDebug() << "Updated P3 Z to " << newZ;
+        }
     }
 }

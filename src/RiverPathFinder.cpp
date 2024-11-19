@@ -53,6 +53,14 @@ void  RiverPathFinder::onLoadFileClick()
     {
         inputFilePath = fileName;
         reader.read(inputFilePath.toStdString(),graph);
+        auto triangles = reader.getTriangles();
+        for (auto tri : triangles)
+        {
+            for (auto pt : tri.getPoints())
+            {
+                qDebug() << pt.getId() << pt.getZ();
+            }
+        }
         OpenGlWidget::Data data = convertDataToGraphicsObject(reader);
         openglWidgetInput->setData(data);
     }
@@ -62,18 +70,17 @@ void RiverPathFinder::onFindPathClick()
 {
     qDebug() << "Find Path Clicked ";
     PathFormulater pathformulater(graph, 1);
-    auto riverPath = pathformulater.findPathToPoint(207);
-
-    auto &points = reader.getPoints();
-    for (int j = 0; j < riverPath.size(); j++)
+    STLFileReader reader1 = reader;
+    auto riverPath = pathformulater.findPathToPoint(121,reader1);
+    auto triangles = reader1.getTriangles();
+    for (auto tri : triangles)
     {
-        int i = riverPath[j] - 1;
-        qDebug() << "Point ID:" << points[i].mID
-            << "X:" << points[i].getX()
-            << "Y:" << points[i].getY()
-            << "Z (Modified):" << points[i].getZ();
+        for (auto pt : tri.getPoints())
+        {
+            qDebug() << pt.getId() << pt.getZ();
+        }
     }
-    OpenGlWidget::Data newData = convertDataToGraphicsObject(reader);
+    OpenGlWidget::Data newData = convertDataToGraphicsObject(reader1);
     openglWidgetOutput1->setData(newData);
 }
 
@@ -81,47 +88,51 @@ void RiverPathFinder::onFindPathClick()
 OpenGlWidget::Data RiverPathFinder::convertDataToGraphicsObject(STLFileReader& reader)
 {
     OpenGlWidget::Data data;
-    auto &triangles = reader.getTriangles();
-    for (auto &triangle : triangles)
+    auto triangles = reader.getTriangles();
+    for (auto triangle : triangles)
     {
-        for (auto &point : triangle.Points())
+        auto pts  = triangle.getPoints();
+        for (auto point : pts)
         {
-            data.vertices.push_back(point.getX());
-            data.vertices.push_back(point.getY());
-            data.vertices.push_back(point.getZ());
+            auto coords = point.getCoords();
+            data.vertices.push_back(coords[0]);
+            data.vertices.push_back(coords[1]);
+            data.vertices.push_back(coords[2]);
         }
         Point normal = triangle.Normal();
-
+        auto normalCoords = normal.getCoords();
         for (size_t i = 0; i < 3; i++)
         {
-            data.normals.push_back(normal.getX());
-            data.normals.push_back(normal.getY());
-            data.normals.push_back(normal.getZ());
+            data.normals.push_back(normalCoords[0]);
+            data.normals.push_back(normalCoords[1]);
+            data.normals.push_back(normalCoords[2]);
         }
     }
     return data;
 }
 
-OpenGlWidgetLines::Data RiverPathFinder::convertDataToGraphicsObject1(STLFileReader& reader)
-{
-    OpenGlWidgetLines::Data data;
-    auto &triangles = reader.getTriangles();
-    for (auto &triangle : triangles)
-    {
-        for (auto &point : triangle.Points())
-        {
-            data.vertices.push_back(point.getX());
-            data.vertices.push_back(point.getY());
-            data.vertices.push_back(point.getZ());
-        }
-        Point normal = triangle.Normal();
-
-        for (size_t i = 0; i < 3; i++)
-        {
-            data.normals.push_back(normal.getX());
-            data.normals.push_back(normal.getY());
-            data.normals.push_back(normal.getZ());
-        }
-    }
-    return data;
-}
+//OpenGlWidgetLines::Data RiverPathFinder::convertDataToGraphicsObject1(STLFileReader& reader)
+//{
+//    OpenGlWidgetLines::Data data;
+//    auto &triangles = reader.getTriangles();
+//    for (auto &triangle : triangles)
+//    {
+//        for (auto point : triangle.getPoints())
+//        {
+//            auto coords = point.getCoords();
+//            data.vertices.push_back(coords[0]);
+//            data.vertices.push_back(coords[1]);
+//            data.vertices.push_back(coords[2]);
+//        }
+//        Point normal = triangle.Normal();
+//        auto normalCoords = normal.getCoords();
+//
+//        for (size_t i = 0; i < 3; i++)
+//        {
+//            data.normals.push_back(normalCoords[0]);
+//            data.normals.push_back(normalCoords[1]);
+//            data.normals.push_back(normalCoords[2]);
+//        }
+//    }
+//    return data;
+//}

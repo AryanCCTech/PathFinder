@@ -69,6 +69,9 @@
     <ClInclude Include="header\PathFormulater.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="header\OpenGLWidgetLines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="header\RiverPathFinder.h">
@@ -78,9 +81,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="header\GraphicsSynchronizer.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="header\OpenGLWidgetLines.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

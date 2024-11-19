@@ -35,7 +35,7 @@ void Graph::printGraph() const
     }
 }
 
-const int Graph::getHighestPoint()
+int Graph::getHighestPoint()
 {
     if (points.empty())
     {
@@ -50,7 +50,7 @@ const int Graph::getHighestPoint()
             highestPoint = point;
         }
     }
-    return highestPoint.mID;
+    return highestPoint.getId();
 }
 
 
@@ -65,12 +65,12 @@ std::unordered_map<int, std::set<int>> Graph::getEdges()
     return adjList;
 }
 
-const std::set<int> Graph::getNeighbors(int id) 
+std::set<int> Graph::getNeighbors(int id) 
 {
     return adjList.at(id);
 }
 
-Point& Graph::getVertex(int id) 
+Point Graph::getVertex(int id) 
 {
     return points[id];
 }

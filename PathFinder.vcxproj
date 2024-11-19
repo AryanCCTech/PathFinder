@@ -115,7 +115,7 @@
   <ItemGroup>
     <ClInclude Include="header\Graph.h" />
     <QtMoc Include="header\GraphicsSynchronizer.h" />
-    <QtMoc Include="header\OpenGLWidgetLines.h" />
+    <ClInclude Include="header\OpenGLWidgetLines.h" />
     <ClInclude Include="header\PathFormulater.h" />
     <QtMoc Include="header\OpenglWidget.h" />
     <QtMoc Include="header\RiverPathFinder.h" />

@@ -9,16 +9,15 @@ namespace Geometry
 		double mX;
 		double mY;
 		double mZ;
-	public:
 		int mID;
+	public:
 		Point();
 		Point(double x,double y, double z,int id);
 		~Point();
-		double getX() ;
-		double getY() ;
 		double getZ() ;
+		double getId() ;
 		void setZ(double zVal);
-		std::vector<double> coord();
+		std::vector<double> getCoords();
 		bool operator<(const Point& other);
 	};
 }
