@@ -71,8 +71,8 @@ void RiverPathFinder::onFindPathClick()
     qDebug() << "Find Path Clicked ";
     PathFormulater pathformulater(graph, 1);
     STLFileReader reader1 = reader;
-    //auto riverPath = pathformulater.findPathToPoint(271, reader1);
-    auto riverPath = pathformulater.findPath();
+    auto riverPath = pathformulater.findPathToPoint(271, reader1);
+    //auto riverPath = pathformulater.findPath();
     auto triangles = reader1.getTriangles();
     for (auto tri : triangles)
     {
@@ -81,11 +81,11 @@ void RiverPathFinder::onFindPathClick()
             qDebug() << pt.getId() << pt.getZ();
         }
     }
-    OpenGlWidget::Data data = convertDataToGraphicsObject(reader);
+    OpenGlWidget::Data data = convertDataToGraphicsObject(reader1);
     QVector<OpenGlWidget::Data> datas;
     datas.push_back(data);
-    OpenGlWidget::Data data = convertDataToGraphicsObject(reader);
-    data.vertices.clear();
+    //OpenGlWidget::Data data = convertDataToGraphicsObject(reader);
+    /*data.vertices.clear();
     auto points = reader.getPoints();
     for (auto i : riverPath)
     {
@@ -99,7 +99,9 @@ void RiverPathFinder::onFindPathClick()
     data.vertices.pop_front();
     data.vertices.pop_front();
     data.vertices.pop_front();
-    data.vertices.pop_back():
+    data.vertices.pop_back();
+    data.vertices.pop_back();
+    data.vertices.pop_back();*/
     openglWidgetOutput->setData(datas);
 }
 
