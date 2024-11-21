@@ -9,10 +9,10 @@
 class STLFileReader
 {
 private:
-    std::unordered_map<std::string, int> pointMap;
-    std::unordered_map<std::string, int> normalPointMap;
     int pointId = 1;
     int normalId = 1;
+    std::unordered_map<std::string, int> pointMap;
+    std::unordered_map<std::string, int> normalPointMap;
     std::vector<Geometry::Point> normals;
     std::vector<Geometry::Point> points;
     std::vector<Geometry::Triangle> triangles;
@@ -25,5 +25,5 @@ public:
     std::vector<Geometry::Point>& getPoints() ;
     std::vector<Geometry::Point>& getNormalPoints() ;
     std::vector<Geometry::Triangle>& getTriangles() ;
-    void setTriangles(std::vector<Geometry::Triangle>);
+    void setTriangles(std::vector<Geometry::Triangle> newTriangles);
 };

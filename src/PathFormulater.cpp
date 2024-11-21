@@ -25,14 +25,13 @@ std::vector<int> PathFormulater::findPath()
     path.push_back(currentNodeId);
     visited.insert(currentNodeId);
 
-    while (true) {
+    while (true) 
+    {
         int nextNodeId = getNextNodeWithLeastZ(currentNodeId);
-
         if (nextNodeId == -1) 
         {
             break;
         }
-
         path.push_back(nextNodeId);
         visited.insert(nextNodeId);
         currentNodeId = nextNodeId;
@@ -74,7 +73,8 @@ int PathFormulater::getNextNodeWithLeastZ(int currentNodeId)
             if (visited.count(neighborId)) continue;
 
             Geometry::Point neighbor = graph.getVertex(neighborId);
-            if (neighbor.getZ() < minZ) {
+            if (neighbor.getZ() < minZ) 
+            {
                 minZ = neighbor.getZ();
                 nextNodeId = neighborId;
             }
@@ -135,10 +135,10 @@ std::vector<int> PathFormulater::findPathToPoint(int targetPointId,STLFileReader
         }
     }
 
-    return {};
+    return {}; // returning empty list if no path
 }
 
-void PathFormulater::setDescendingZValues(std::vector<int>& path,STLFileReader& inputReader)
+void PathFormulater::setDescendingZValues(std::vector<int> path,STLFileReader& inputReader)
 {
     if (path.empty())
     {

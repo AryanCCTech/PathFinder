@@ -29,7 +29,7 @@ private slots:
 private:
     void setupUi();
     OpenGlWidget::Data convertDataToGraphicsObject(STLFileReader& reader);
-    //OpenGlWidgetLines::Data convertDataToGraphicsObject1(STLFileReader& reader);
+    OpenGlWidget::Data convertDataToGraphicsObject1(STLFileReader& reader,std::vector<int> path);
 
 private:
     STLFileReader reader;
@@ -39,8 +39,7 @@ private:
     QPushButton* findPath;
 
     OpenGlWidget* openglWidgetInput;
-    //OpenGlWidgetLines* openglWidgetOutput;
-    OpenGlWidget* openglWidgetOutput1;
+    OpenGlWidget* openglWidgetOutput;
 
     GraphicsSynchronizer* graphicsSynchronizer;
 

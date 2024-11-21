@@ -3,8 +3,9 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <unordered_map>
 #include <QDebug>
+
+#define TOLERANCE 0.0000001
 
 using namespace Geometry;
 
@@ -33,7 +34,9 @@ bool STLFileReader::read(const std::string& filename, Graph& graph)
     std::string line;
     std::vector<Point> trianglePoints;
     std::vector<Point> normalPoints;
-    double x, y, z;
+    double x;
+    double y;
+    double z;
 
     while (std::getline(file, line))
     {
@@ -86,8 +89,6 @@ bool STLFileReader::read(const std::string& filename, Graph& graph)
             Triangle t = Triangle(normalPoints[0], trianglePoints[0], trianglePoints[1], trianglePoints[2]);
             triangles.push_back(t);
             qDebug() << "Created Triangle vertices: ";
-            //qDebug() << trianglePoints[0].getId() << trianglePoints[1].getId() << trianglePoints[2].getId();
-
             addEdgesForTriangle(trianglePoints[0], trianglePoints[1], graph);
             addEdgesForTriangle(trianglePoints[1], trianglePoints[2], graph);
             addEdgesForTriangle(trianglePoints[2], trianglePoints[0], graph);

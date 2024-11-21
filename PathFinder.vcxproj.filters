@@ -21,6 +21,9 @@
       <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
       <Extensions>ts</Extensions>
     </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{e58d1c3f-7ac1-435a-839b-d3045028a036}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="PathFinder.qrc">
@@ -85,7 +88,23 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\fragment.glsl" />
-    <None Include="shaders\vertex.glsl" />
+    <None Include="shaders\vertex.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\fragment.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\shadedFrag.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\shadedVert.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\wireFrag.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\wireVert.glsl">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

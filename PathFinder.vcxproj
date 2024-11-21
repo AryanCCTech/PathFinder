@@ -97,7 +97,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="shaders\fragment.glsl" />
+    <None Include="shaders\shadedFrag.glsl" />
+    <None Include="shaders\shadedVert.glsl" />
     <None Include="shaders\vertex.glsl" />
+    <None Include="shaders\wireFrag.glsl" />
+    <None Include="shaders\wireVert.glsl" />
     <QtRcc Include="PathFinder.qrc" />
     <None Include="PathFinder.ico" />
     <ResourceCompile Include="PathFinder.rc" />

@@ -1,4 +1,3 @@
-#include <vector>
 #include "Triangle.h"
 
 using namespace Geometry;
