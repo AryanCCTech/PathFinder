@@ -43,17 +43,17 @@ std::vector<Point> Triangle::getPoints()
     return points;
 }
 
-void Geometry::Triangle::setP1(Geometry::Point& P1)
+void Geometry::Triangle::setP1ZVal(double zVal)
 {
-    p1 = P1;
+    p1.setZ(zVal);
 }
 
-void Geometry::Triangle::setP2(Geometry::Point& P2)
+void Geometry::Triangle::setP2ZVal(double zVal)
 {
-    p2 = P2;
+    p2.setZ(zVal);
 }
 
-void Geometry::Triangle::setP3(Geometry::Point& P3)
+void Geometry::Triangle::setP3ZVal(double zVal)
 {
-    p3 = P3;
+    p3.setZ(zVal);
 }

@@ -173,28 +173,19 @@ void PathFormulater::updateTriangles(int id, STLFileReader& inputReader, double 
 
         if (p1Id == id)
         {
-            std::vector<double> coords = triangle.P1().getCoords();
-            coords[2] = newZ;
-            Geometry::Point p(coords[0], coords[1], coords[2], triangle.P1().getId());
-            triangle.setP1(p); // Set the updated point
+            triangle.setP1ZVal(newZ);
             qDebug() << "Updated P1 Z to " << newZ;
         }
 
         if (p2Id == id)
         {
-            std::vector<double> coords = triangle.P2().getCoords();
-            coords[2] = newZ; // Update Z coordinate
-            Geometry::Point p(coords[0], coords[1], coords[2], triangle.P2().getId());
-            triangle.setP2(p); // Set the updated point
+            triangle.setP2ZVal(newZ);
             qDebug() << "Updated P2 Z to " << newZ;
         }
 
         if (p3Id == id)
         {
-            std::vector<double> coords = triangle.P3().getCoords();
-            coords[2] = newZ; // Update Z coordinate
-            Geometry::Point p(coords[0], coords[1], coords[2], triangle.P3().getId());
-            triangle.setP3(p); // Set the updated point
+            triangle.setP3ZVal(newZ);
             qDebug() << "Updated P3 Z to " << newZ;
         }
     }

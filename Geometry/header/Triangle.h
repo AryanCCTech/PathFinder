@@ -24,8 +24,8 @@ namespace Geometry
         Point& Normal();
         std::vector<Point> getPoints();
 
-        void setP1(Geometry::Point&);
-        void setP2(Geometry::Point&);
-        void setP3(Geometry::Point&);
+        void setP1ZVal(double Zval);
+        void setP2ZVal(double Zval);
+        void setP3ZVal(double Zval);
     };
 }

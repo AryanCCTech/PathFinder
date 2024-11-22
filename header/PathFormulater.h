@@ -8,7 +8,7 @@
 class PathFormulater 
 {
     std::vector<int> path;         
-    std::unordered_set<int> visited;     
+    std::unordered_set<int> visited;
     Graph& graph;
     int startPointId;
 public:

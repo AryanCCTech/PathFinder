@@ -47,18 +47,18 @@ bool STLFileReader::read(const std::string& filename, Graph& graph)
             ss >> discard >> discard >> x >> y >> z;
 
             std::string normalKey = std::to_string(x) + "," + std::to_string(y) + "," + std::to_string(z);
-            if (normalPointMap.find(normalKey) == normalPointMap.end())
+            if (pointMap.find(normalKey) == pointMap.end())
             {
-                Point normalPoint(x, y, z, normalId);
-                normals.push_back(normalPoint);
-                normalPointMap[normalKey] = normalId;
+                Point normalPoint(x, y, z);
+                points.push_back(normalPoint);
+                pointMap[normalKey] = pointId;
                 normalPoints.push_back(normalPoint);
-                normalId++;
+                pointId++;
                 qDebug() << "Created Normal " << x << " " << y << " " << normalPoint.getZ() << " " << normalPoint.getId();
             }
             else
             {
-            normalPoints.push_back(normals[normalPointMap[normalKey]-1]);
+            normalPoints.push_back(points[pointMap[normalKey]-1]);
             }
         }
         else if (line.find("vertex") != std::string::npos)
@@ -70,7 +70,7 @@ bool STLFileReader::read(const std::string& filename, Graph& graph)
 
             if (pointMap.find(pointKey) == pointMap.end())
             {
-                Point vertexPoint(x, y, z, pointId);
+                Point vertexPoint(x, y, z);
                 points.push_back(vertexPoint);
                 graph.addVertex(pointId, vertexPoint);
                 pointMap[pointKey] = pointId;
@@ -120,11 +120,6 @@ void STLFileReader::addEdgesForTriangle(Point p1, Point p2, Graph& graph)
 std::vector<Geometry::Point>& STLFileReader::getPoints()
 {
     return points;
-}
-
-std::vector<Geometry::Point>& STLFileReader::getNormalPoints()
-{
-    return normals;
 }
 
 std::vector<Geometry::Triangle>& STLFileReader::getTriangles()

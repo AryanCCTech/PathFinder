@@ -1,54 +1,43 @@
 #include "Point.h"
 
-Geometry::Point::Point() : mX(0), mY(0), mZ(0), mID(-1)
+namespace Geometry
 {
-}
+    int Point::sNextID = 0;
 
-Geometry::Point::Point(double x, double y, double z, int id)
-{
-	mX = x;
-	mY = y;
-	mZ = z;
-	mID = id;
-}
+    Point::Point() : mX(0), mY(0), mZ(0), mID(sNextID++)
+    {
+    }
 
-Geometry::Point::~Point()
-{
-}
+    Point::Point(double x, double y, double z) : mX(x), mY(y), mZ(z), mID(sNextID++)
+    {
+    }
 
-double Geometry::Point::getZ()  
-{
-	return mZ;
-}
+    Point::~Point()
+    {
+    }
 
-double Geometry::Point::getId() 
-{
-	return mID;
-}
+    double Point::getZ()
+    {
+        return mZ;
+    }
 
-void Geometry::Point::setZ(double zVal)
-{
-	mZ = zVal;
-}
+    int Point::getId()
+    {
+        return mID;
+    }
 
-std::vector<double> Geometry::Point::getCoords()
-{
-	std::vector<double> coords;
-	coords.push_back(mX);
-	coords.push_back(mY);
-	coords.push_back(mZ);
-	return coords;
-}
+    void Point::setZ(double zVal)
+    {
+        mZ = zVal;
+    }
 
-bool Geometry::Point::operator<(const Point& other)
-{
-	if (mX != other.mX)
-	{
-		return mX < other.mX;
-	}
-	if (mY != other.mY)
-	{
-		return mY < other.mY;
-	}
-	return mZ < other.mZ;
+    std::vector<double> Point::getCoords()
+    {
+        return { mX, mY, mZ };
+    }
+
+    bool Point::operator<(const Point& other)
+    {
+        return mID < other.mID;
+    }
 }
