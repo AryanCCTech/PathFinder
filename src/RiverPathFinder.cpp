@@ -56,52 +56,30 @@ void  RiverPathFinder::onLoadFileClick()
         {
             for (auto pt : tri.getPoints())
             {
-                qDebug() << pt.getId() << pt.getZ();
+                qDebug() << "Node ID: " << pt.getId() << " X Value:" << pt.getCoords()[0] << " Y Value:" << pt.getCoords()[1] << " Z Value:" << pt.getCoords()[2];
             }
         }
         OpenGlWidget::Data data = convertDataToGraphicsObject(reader);
+        PathFormulater pathformulater(graph, graph.getHighestPoint());
+        auto riverPath = pathformulater.findPath();
         openglWidgetInput->addObject(data);
+        OpenGlWidget::Data data1 = convertDataToGraphicsObject1(reader,riverPath);
+        openglWidgetInput->addObject(data1);
     }
 }
 
 void RiverPathFinder::onFindPathClick()
 {
     qDebug() << "Find Path Clicked ";
-    PathFormulater pathformulater(graph, 1);
+    PathFormulater pathformulater(graph, graph.getHighestPoint());
     STLFileReader reader1 = reader;
-    auto riverPath = pathformulater.findPathToPoint(301, reader1);
-    //auto riverPath = pathformulater.findPath();
+    auto riverPath = pathformulater.findPathToPoint(209, reader1);
     auto triangles = reader1.getTriangles();
-    for (auto tri : triangles)
-    {
-        for (auto pt : tri.getPoints())
-        {
-            qDebug() << pt.getId() << pt.getZ();
-        }
-    }
     //OpenGlWidget::Data data = convertDataToGraphicsObject(reader1);
     //openglWidgetOutput->addObject(data);
     OpenGlWidget::Data data1 = convertDataToGraphicsObject(reader1);
-    data1.drawStyle = OpenGlWidget::LINES;
-   /* data1.vertices.clear();
-    data1.normals.clear();
-    auto points = reader1.getPoints();
-    for (auto i : riverPath)
-    {
-        data1.vertices.push_back(points[i].getCoords()[0]);
-        data1.vertices.push_back(points[i].getCoords()[1]);
-        data1.vertices.push_back(points[i].getCoords()[2]);
-        data1.vertices.push_back(points[i].getCoords()[0]);
-        data1.vertices.push_back(points[i].getCoords()[1]);
-        data1.vertices.push_back(points[i].getCoords()[2]);
-    }
-    data1.vertices.pop_front();
-    data1.vertices.pop_front();
-    data1.vertices.pop_front();
-    data1.vertices.pop_back();
-    data1.vertices.pop_back();
-    data1.vertices.pop_back();*/
-    data1.drawStyle = OpenGlWidget::LINES;
+    //auto riverPath = pathformulater.findPath();
+    //openglWidgetOutput->addObject(data);
     openglWidgetOutput->addObject(data1);
 }
 
@@ -134,28 +112,54 @@ OpenGlWidget::Data RiverPathFinder::convertDataToGraphicsObject(STLFileReader& r
             data.colors.push_back(1.0);
             data.colors.push_back(0.07);
         }
-        data.drawStyle = OpenGlWidget::TRIANGLES;
     }
+    data.drawStyle = OpenGlWidget::TRIANGLES;
     return data;
 }
 
-OpenGlWidget::Data RiverPathFinder::convertDataToGraphicsObject1(STLFileReader& reader,std::vector<int> path)
+OpenGlWidget::Data RiverPathFinder::convertDataToGraphicsObject1(STLFileReader& reader,std::vector<int> riverPath)
 {
-    OpenGlWidget::Data data;
+    OpenGlWidget::Data data1;
     auto points = reader.getPoints();
-    for (auto i : path)
+    for (auto i : riverPath)
     {
-        auto coords = points[i].getCoords();
-        data.vertices.push_back(coords[0]);
-        data.vertices.push_back(coords[1]);
-        data.vertices.push_back(coords[2]);
+        data1.vertices.push_back(points[i].getCoords()[0]);
+        data1.vertices.push_back(points[i].getCoords()[1]);
+        data1.vertices.push_back(points[i].getCoords()[2]);
+        data1.normals.push_back(points[i].getCoords()[0]);
+        data1.normals.push_back(points[i].getCoords()[1]);
+        data1.normals.push_back(points[i].getCoords()[2]);
+        data1.colors.push_back(0.55);
+        data1.colors.push_back(0.0);
+        data1.colors.push_back(0.0);
+        data1.vertices.push_back(points[i].getCoords()[0]);
+        data1.vertices.push_back(points[i].getCoords()[1]);
+        data1.vertices.push_back(points[i].getCoords()[2]);
+        data1.normals.push_back(points[i].getCoords()[0]);
+        data1.normals.push_back(points[i].getCoords()[1]);
+        data1.normals.push_back(points[i].getCoords()[2]);
+        data1.colors.push_back(0.55);
+        data1.colors.push_back(0.0);
+        data1.colors.push_back(0.0);
     }
-    for (int i = 0; i < 3; i++)
-    {
-        data.colors.push_back(0.0);
-        data.colors.push_back(0.0);
-        data.colors.push_back(0.9);
-    }
-    data.drawStyle = OpenGlWidget::LINES;
-    return data;
+    data1.vertices.pop_front();
+    data1.vertices.pop_front();
+    data1.vertices.pop_front();
+    data1.normals.pop_front();
+    data1.normals.pop_front();
+    data1.normals.pop_front();
+    data1.colors.pop_front();
+    data1.colors.pop_front();
+    data1.colors.pop_front();
+    data1.vertices.pop_back();
+    data1.vertices.pop_back();
+    data1.vertices.pop_back();
+    data1.normals.pop_back();
+    data1.normals.pop_back();
+    data1.normals.pop_back();
+    data1.colors.pop_back();
+    data1.colors.pop_back();
+    data1.colors.pop_back();
+    data1.drawStyle = OpenGlWidget::LINES;
+    return data1;
 }

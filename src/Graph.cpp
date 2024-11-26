@@ -12,9 +12,9 @@ Graph::~Graph()
 {
 }
 
-void Graph::addVertex(int id, Geometry::Point& point)
+void Graph::addVertex(int id, double zElevation)
 {
-    points[id] = point;
+    points[id] = zElevation;
 }
 
 void Graph::addEdge(int id1, int id2)
@@ -35,27 +35,34 @@ void Graph::printGraph() const
     }
 }
 
+void Graph::setVertex(int id, double zElevation)
+{
+    points[id] = zElevation;
+}
+
 int Graph::getHighestPoint()
 {
     if (points.empty())
     {
         throw std::runtime_error("Graph has no vertices.");
     }
-    auto highestPoint = points.begin()->second;
+    auto highestPointZ = points.begin()->second;
+    auto highestPointYIndex = points.begin()->first;
     for (auto& pair : points)
     {
-        Geometry::Point& point = pair.second;
-        if (point.getZ() > highestPoint.getZ()) 
+        auto point = pair.second;
+        if (point > highestPointZ) 
         {
-            highestPoint = point;
+            highestPointZ = point;
+            highestPointYIndex = pair.first;
         }
     }
-    return highestPoint.getId();
+    return highestPointYIndex;
 }
 
 
 
-std::unordered_map<int, Geometry::Point> Graph::getVertices() 
+std::unordered_map<int, double> Graph::getVertices() 
 {
     return points;
 }
@@ -70,7 +77,7 @@ std::set<int> Graph::getNeighbors(int id)
     return adjList.at(id);
 }
 
-Point Graph::getVertex(int id) 
+double Graph::getVertexZ(int id) 
 {
     return points[id];
 }

@@ -72,6 +72,7 @@ void OpenGlWidget::initializeGL()
 {
     initializeOpenGLFunctions();
     glEnable(GL_DEPTH_TEST);
+    glClearColor(0.45f, 0.29f, 0.07f, 1.0f);
     loadShaders();
 }
 
@@ -89,6 +90,7 @@ void OpenGlWidget::paintGL()
     if (isInitialized == true)
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glLineWidth(5.0f);
         updateModelViewMatrix();
 
         for (DrawingObject drawingObject : drawingObjects)
@@ -103,7 +105,7 @@ void OpenGlWidget::paintGL()
             shader.setUniformValue("lightPos", lightPos);
             shader.setUniformValue("viewPos", QVector3D(0.0f, 0.0f, 5.0f));
 
-            GLenum drawMode = (drawingObject.drawStyle == DrawStyle::TRIANGLES) ? GL_TRIANGLES : GL_LINE_LOOP;
+            GLenum drawMode = (drawingObject.drawStyle == DrawStyle::TRIANGLES) ? GL_TRIANGLES : GL_LINES;
 
             drawingObject.vao->bind();
             glDrawArrays(drawMode, 0, drawingObject.numVertices);

@@ -17,6 +17,7 @@ private:
 public:
     STLFileReader();
     ~STLFileReader();
+    void setPoint(int id, double newZValue);
     bool operator()(double a, double b) const;
     bool read(const std::string& filename, Graph& grpah);
     void addEdgesForTriangle( Geometry::Point p1, Geometry::Point p2,Graph& graph);

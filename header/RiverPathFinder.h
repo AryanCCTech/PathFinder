@@ -7,7 +7,6 @@
 
 #include "Triangle.h"
 #include "OpenglWidget.h"
-#include "OpenGLWidgetLines.h"
 #include "Graph.h"
 #include "GraphicsSynchronizer.h"
 #include "STLFileReader.h"

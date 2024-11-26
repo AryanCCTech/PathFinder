@@ -47,47 +47,46 @@ std::vector<int> PathFormulater::getPath()
 
 int PathFormulater::getNextNodeWithLeastZ(int currentNodeId)
 {
-    double minZ = graph.getVertex(currentNodeId).getZ();
-    int nextNodeId = -1;
-
-    try 
+    try
     {
         auto neighbors = graph.getNeighbors(currentNodeId);
-        bool hasUnvisitedNeighbors = false;
-        for (const auto& neighborId : neighbors) 
+        if (neighbors.empty())
         {
-            if (!visited.count(neighborId))
+            throw std::runtime_error("No neighbors found for the current node.");
+        }
+        int nextNodeId = -1;
+        double minZ = graph.getVertexZ(currentNodeId);
+        for (int neighbor : neighbors)
+        {
+            if (visited.count(neighbor))
             {
-                hasUnvisitedNeighbors = true;
-                break;
+                continue;
+            }
+            double z = graph.getVertexZ(neighbor);
+            if (z < minZ)
+            {
+                minZ = z;
+                nextNodeId = neighbor;
             }
         }
-
-        if (!hasUnvisitedNeighbors) 
+        if (nextNodeId == -1)
         {
-            return -1;
+            throw std::runtime_error("No unvisited neighbors with lower Z elevation.");
         }
-
-        for (auto& neighborId : neighbors) 
-        {
-            if (visited.count(neighborId)) continue;
-
-            Geometry::Point neighbor = graph.getVertex(neighborId);
-            if (neighbor.getZ() < minZ) 
-            {
-                minZ = neighbor.getZ();
-                nextNodeId = neighborId;
-            }
-        }
+        return nextNodeId;
     }
-    catch (const std::out_of_range& e) 
+    catch (const std::out_of_range& e)
     {
-        qDebug() << "Error: Node" << currentNodeId << "has no neighbors.";
+        qDebug() << "Error: Invalid node ID - " << currentNodeId << ". Node not found in the graph.";
         return -1;
     }
-    qDebug() << "Current Node:" << currentNodeId << ", Z Value : " << graph.getVertex(currentNodeId).getZ() << ", ID Value : " << graph.getVertex(currentNodeId).getId();
-    return nextNodeId;
+    catch (const std::exception& e)
+    {
+        qDebug() << "Error: " << e.what();
+        return -1;
+    }
 }
+
 
 std::vector<int> PathFormulater::findPathToPoint(int targetPointId,STLFileReader& inputReader)
 {
@@ -145,8 +144,8 @@ void PathFormulater::setDescendingZValues(std::vector<int> path,STLFileReader& i
         return;
     }
 
-    double startZ = graph.getVertex(path[0]).getZ();
-    double endZ = graph.getVertex(path[path.size() - 1]).getZ();
+    double startZ = graph.getVertexZ(path[0]);
+    double endZ = graph.getVertexZ(path[path.size() - 1]);
 
     if (startZ < endZ) {
         std::swap(startZ, endZ);
@@ -156,6 +155,7 @@ void PathFormulater::setDescendingZValues(std::vector<int> path,STLFileReader& i
     for (size_t i = 0; i < path.size(); ++i)
     {
         double newZ = startZ - (step * i);
+        graph.setVertex(path[i],newZ);
         updateTriangles(path[i], inputReader,newZ);
  
     }

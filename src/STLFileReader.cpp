@@ -17,6 +17,17 @@ STLFileReader::~STLFileReader()
 {
 }
 
+void STLFileReader::setPoint(int id, double newZValue)
+{
+    for (auto i : points)
+    {
+        if (i.getId() == id)
+        {
+            i.setZ(newZValue);
+        }
+    }
+}
+
 bool STLFileReader::operator()(double a, double b) const
 {
     return fabs(a - b) > TOLERANCE ? a < b : false;
@@ -51,14 +62,14 @@ bool STLFileReader::read(const std::string& filename, Graph& graph)
             {
                 Point normalPoint(x, y, z);
                 points.push_back(normalPoint);
-                pointMap[normalKey] = pointId;
+                pointMap[normalKey] = normalPoint.getId();
                 normalPoints.push_back(normalPoint);
-                pointId++;
                 qDebug() << "Created Normal " << x << " " << y << " " << normalPoint.getZ() << " " << normalPoint.getId();
             }
             else
             {
-            normalPoints.push_back(points[pointMap[normalKey]-1]);
+                auto x = pointMap[normalKey];
+                normalPoints.push_back(points[pointMap[normalKey]]);
             }
         }
         else if (line.find("vertex") != std::string::npos)
@@ -72,15 +83,14 @@ bool STLFileReader::read(const std::string& filename, Graph& graph)
             {
                 Point vertexPoint(x, y, z);
                 points.push_back(vertexPoint);
-                graph.addVertex(pointId, vertexPoint);
-                pointMap[pointKey] = pointId;
+                graph.addVertex(vertexPoint.getId(), vertexPoint.getZ());
+                pointMap[pointKey] = vertexPoint.getId();
                 trianglePoints.push_back(vertexPoint);
                 qDebug() << "Created Vertex " << x << " " << y << " " << vertexPoint.getZ() << " " << vertexPoint.getId();
-                pointId++;
             }
             else
             {
-                trianglePoints.push_back(points[pointMap[pointKey]-1]);
+                trianglePoints.push_back(points[pointMap[pointKey]]);
             }
         }
 

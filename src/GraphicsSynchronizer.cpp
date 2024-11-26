@@ -1,5 +1,4 @@
 #include "OpenglWidget.h"
-#include "OpenglWidgetLines.h"
 #include "GraphicsSynchronizer.h"
 
 

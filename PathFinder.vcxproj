@@ -111,7 +111,6 @@
     <ClCompile Include="src\GraphicsSynchronizer.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\OpenglWidget.cpp" />
-    <ClCompile Include="src\OpenGLWidgetLines.cpp" />
     <ClCompile Include="src\PathFormulater.cpp" />
     <ClCompile Include="src\RiverPathFinder.cpp" />
     <ClCompile Include="src\STLFileReader.cpp" />
@@ -120,7 +119,6 @@
     <ClInclude Include="header\Graph.h" />
     <QtMoc Include="header\GraphicsSynchronizer.h" />
     <QtMoc Include="header\OpenglWidget.h" />
-    <ClInclude Include="header\OpenGLWidgetLines.h" />
     <ClInclude Include="header\PathFormulater.h" />
     <QtMoc Include="header\RiverPathFinder.h" />
     <ClInclude Include="header\STLFileReader.h" />
